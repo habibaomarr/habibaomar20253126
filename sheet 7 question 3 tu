@@ -1,0 +1,73 @@
+package javaapplication62;
+import java.util.Scanner;
+class Book {
+    private String title;
+    private String author;
+    private double price;
+    public Book() {
+        this.title = "Unknown";
+        this.author = "Unknown";
+        this.price = 0.0;
+    }
+    public Book(String title, String author, double price) {
+        this.title = title;
+        this.author = author;
+        this.price = price;
+    }
+    public void applyDiscount(double percentage) {
+        if (percentage > 0 && percentage <= 100) {
+            this.price -= this.price * (percentage / 100.0);
+        }
+    }
+    public boolean isExpensive() {
+        return this.price > 500;
+    }
+    public String getTitle() {
+        return title;
+    }
+    public String getAuthor() {
+        return author;
+    }
+    public double getPrice() {
+        return price;
+    }
+}
+public class JavaApplication62 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of books: ");
+        int n = scanner.nextInt();
+        scanner.nextLine(); 
+        Book[] books = new Book[n];
+        for (int i = 0; i < n; i++) {
+            System.out.println("\nEnter details for Book " + (i + 1) + ":");
+            System.out.print("Enter title: ");
+            String title = scanner.nextLine();
+            
+            System.out.print("Enter author: ");
+            String author = scanner.nextLine();
+            System.out.print("Enter price: ");
+            double price = scanner.nextDouble();
+            scanner.nextLine();
+            books[i] = new Book(title, author, price);
+        }
+        System.out.print("\nEnter the index of the book to apply a discount (0 to " + (n - 1) + "): ");
+        int index = scanner.nextInt();
+        if (index >= 0 && index < n) {
+            System.out.print("Enter the discount percentage (e.g., 10 for 10%): ");
+            double percentage = scanner.nextDouble();
+            books[index].applyDiscount(percentage);
+            System.out.println("Discount applied successfully to \"" + books[index].getTitle() + "\"!");
+        } else {
+            System.out.println("Invalid index! No discount applied.");
+        }
+        for (int i = 0; i < n; i++) {
+            System.out.println("Index " + i + ":");
+            System.out.println("  Title : " + books[i].getTitle());
+            System.out.println("  Author : " + books[i].getAuthor());
+            System.out.println("  Price : " + String.format("%.2f", books[i].getPrice()));
+            System.out.println("  Expensive : " + (books[i].isExpensive() ? "Yes (Price > 500)" : "No"));
+        }
+       
+    }
+}
